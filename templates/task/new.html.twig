@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Nouvelle tâche {% endblock %}
+
+{% block header_title %}
+    <h1> Nouvelle tâche </h1>
+{% endblock header_title %}
+
+{% block header_img %}<img class="w-100" src="{{ asset('img/todolist_content.jpg') }}" alt="todo list">{% endblock %}
+
+{% block body %}
+    <div class="row mt-3">
+        <div class="col-12">
+            {{ include('task/elements/_form.html.twig') }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 d-flex">
+            <a href="{{ path('app_task_index') }}" class="btn btn-secondary mx-1"> Retour </a>
+        </div>
+    </div>
+{% endblock %}

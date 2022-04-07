@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Utilisateur | {{ user.username }} {% endblock %}
+
+{% block header_title %}
+    <h1> Utilisateur </h1>
+{% endblock header_title %}
+
+{% block body %}
+    <table class="table">
+        <tbody>
+            <tr>
+                <th> Identifiant </th>
+                <td> {{ user.id }} </td>
+            </tr>
+            <tr>
+                <th> Nom d'utilisateur </th>
+                <td> {{ user.username }} </td>
+            </tr>
+            <tr>
+                <th> Adresse email </th>
+                <td> {{ user.email }} </td>
+            </tr>
+            <tr>
+                <th> Rôles </th>
+                <td>
+                    {% if user.roles %}
+                        {% if 'ROLE_ADMIN' in user.roles %}
+                            Administrateur
+                        {% endif %}
+                        {% if 'ROLE_USER' in user.roles %}
+                            Utilisateur
+                        {% endif %}                    
+                    {% endif %}
+                </td>
+            </tr>
+
+            <tr>
+                <th> Date d'inscription </th>
+                <td> {{ user.createdAt ? user.createdAt|date('d/m/Y à H:i') : '' }} </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_user_edit', {'id': user.id}) }}" class="btn btn-primary"> Modifier </a>
+
+    <a href="{{ path('app_user_index') }}" class="btn btn-secondary"> Retour </a>
+
+    {{ include('user/elements/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,46 @@
+<div class="card shadow-sm border-light mb-3 h-100">
+    <div class="card-header"> 
+        <a href="{{ path('app_task_show', {id: task.id}) }}" class="text-decoration-none text-dark">{{ task.title }} </a>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-10">
+                <p class="card-text">
+                    {{ task.content }}
+                </p>              
+            </div>
+            <div class="col-2">
+                <span class="badge {{ 'bg-' ~ (task.isDone ? 'success' :  'danger')  }} rounded float-end">
+                    <i data-feather="{{ task.isDone ? 'check-circle' :  'x-circle' }}" class="fs-5"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer bg-transparent border-0">
+        <div class="d-flex justify-content-end">
+            <div class="me-1">
+                {% include "task/elements/_toggle_form.html.twig" %}
+            </div>
+            <div class="">
+                {% if is_granted('TASK_DELETE', task) %}
+                    {% include "task/elements/_delete_form.html.twig" %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <p class="card-text fst-italic">
+            <small class="text-muted">
+                {% if task.updatedAt != task.createdAt %}
+                    Dernière mise à jour le : {{ task.updatedAt|date('d/m/y à H:i') }}
+                    <br>
+                    Par : {{ task.updatedBy ? task.updatedBy.username : task.author.username}}                
+                {% else %}
+                    Créée le : {{ task.createdAt|date('d/m/y à H:i') }}
+                    <br>
+                    Par : {{ task.author.username }}                       
+                {% endif %}
+            </small>
+        </p>
+    </div>
+</div>

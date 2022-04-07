@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
         <title>{% block title %} To Do List app {% endblock %}</title>
@@ -15,7 +15,26 @@
     <body>
         {% include "elements/_navigation_bar.html.twig" %}
         <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    {% for label, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div class="mt-3">
+                                <div class="alert alert-{{ label }} alert-dismissible fade show p-3" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                    {% block header_title %}{% endblock %}
+                    {% block header_img %}{% endblock %}
+                </div>
+            </div>
+        </div>
+        <div class="container">
             {% block body %}{% endblock %}
         </div>
+        {% include "elements/footer.html.twig" %}
     </body>
 </html>

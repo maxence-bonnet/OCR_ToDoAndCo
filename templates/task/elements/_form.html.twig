@@ -1,0 +1,19 @@
+{{ form_start(form) }}
+    {{ form_row(form.title, {
+        label: 'Nom de la tâche',
+        row_attr: {class: 'form-floating mb-3'},
+        attr : {placeholder: 'default'},
+    }) }}
+    {# placeholder declaration necessary for dynamic floating label behaviour #}
+    {{ form_row(form.content, {
+        label: 'Description',
+        row_attr: {class: 'form-floating mb-3'},
+        attr : {placeholder: 'default'},
+    }) }}
+
+    <div class="row">
+        <div class="col-12 d-flex justify-content-end">
+            <button class="btn btn-primary ms-auto">{{ button_label|default('Enregister') }}</button>
+        </div>
+    </div>
+{{ form_end(form) }}

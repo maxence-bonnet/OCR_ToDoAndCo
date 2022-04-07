@@ -1,9 +1,41 @@
-<nav class="navbar navbar-light navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-expand-lg  navbar-light navbar-fixed-top mb-3" role="navigation">
     <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">To Do List app</a>
-
-            <img src="{{ asset('img/Logo_OpenClassrooms.png') }}" alt="OpenClassrooms" />
+        <a href="{{ path('app_home')}}"><img src="{{ asset('img/Logo_OpenClassrooms.png') }}" alt="OpenClassrooms"></a>
+        <a class="navbar-brand" href="{{ path('app_home')}}">To Do List app</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav mb-2 mb-lg-0 w-100">
+                <li class="nav-item">
+                    <a class="nav-link {{ current_nav is defined and current_nav is same as('home') ? 'active' }}" href="{{ path('app_home') }}"> Accueil </a>
+                </li>
+                {% if is_granted('ROLE_USER') %}
+                    <li class="nav-item">
+                        <a class="nav-link {{ current_nav is defined and current_nav is same as('task') ? 'active' }}" href="{{ path('app_task_index') }}"> Tâches </a>
+                    </li>
+                {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item">
+                        <a class="nav-link  {{ current_nav is defined and current_nav is same as('user') ? 'active' }}" href="{{ path('app_user_index') }}"> Utilisateurs </a>
+                    </li>
+                {% endif %}
+                {% if is_granted('ROLE_USER') %}
+                    <li class="nav-item ms-auto">
+                        <span class="btn btn-outline-secondary"><i data-feather="user"></i> {{ app.user.username }}</span>
+                        <a href="{{ path('app_logout')}}" class="btn btn-primary ms-auto"><i data-feather="log-out"></i> Déconnexion </a>
+                    </li>
+                {% else %}
+                    <li class="nav-item ms-auto">
+                    {% if current_nav is defined and current_nav is not same as('register') %}
+                        <a href="{{ path('app_register')}}" class="btn btn-primary auto"><i data-feather="user-plus"></i> Inscription </a>
+                    {% endif %}
+                    {% if current_nav is defined and current_nav is not same as('login') %}
+                        <a href="{{ path('app_login')}}" class="btn btn-primary auto"><i data-feather="log-in"></i> Connexion </a>
+                    {% endif %}
+                </li>
+                {% endif %}
+            </ul>
         </div>
     </div>
 </nav>

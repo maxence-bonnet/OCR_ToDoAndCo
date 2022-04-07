@@ -1,0 +1,22 @@
+{{ form_start(form) }}
+    {{ form_row(form.username, {
+        label: 'Nom d\'utilisateur',
+    }) }}
+    {{ form_row(form.email, {
+        label: 'Adresse email',
+    }) }}
+    {{ form_row(form.roles, {
+        label: 'Rôle',
+    }) }}
+    {{ form_row(form.plainPassword.first, {
+        label: 'Nouveau mot de passe',
+    }) }}
+    {{ form_row(form.plainPassword.second, {
+        label: 'Répéter le mot de passe',
+    }) }}
+    <div class="row">
+        <div class="col-12 d-flex justify-content-end">
+            <button class="btn btn-primary ms-auto">{{ button_label|default('Enregister') }}</button>
+        </div>
+    </div>
+{{ form_end(form) }}

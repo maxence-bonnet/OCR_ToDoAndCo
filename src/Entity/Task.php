@@ -20,7 +20,7 @@ class Task
     private $content;
 
     #[ORM\Column(type: 'boolean')]
-    private $isDone;
+    private $isDone = false;
 
     #[ORM\Column(type: 'datetime_immutable')]
     private $createdAt;
