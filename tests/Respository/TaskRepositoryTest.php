@@ -22,6 +22,13 @@ class TaskRespositoryTest extends WebTestCase
         $this->assertEquals(self::$fixturesTasksCount, $count);
     }
 
+    public function testFindAllJoinUser()
+    {
+        /** @var TaskRepository $taskRepository  */
+        $taskRepository = static::getContainer()->get(TaskRepository::class);
+        $count = count($taskRepository->findAllJoinUser());
+        $this->assertEquals(self::$fixturesTasksCount, $count, sprintf('Method TaskRepository::findAllJoinUser() does not seem to recover all expected tasks.'));
+    }
 
     public function testAddTask()
     {

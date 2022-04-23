@@ -17,7 +17,7 @@ class TaskController extends AbstractController
     #[Route('/', name: 'app_task_index', methods: ['GET'])]
     public function index(TaskRepository $taskRepository, Request $request): Response
     {
-        $tasks = $taskRepository->findAll();
+        $tasks = $taskRepository->findAllJoinUser();
 
         $doneTasks = [];
         $todoTasks = [];

@@ -20,7 +20,20 @@ class TaskRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Task::class);
     }
-
+    
+    /**
+     * @return Task[]
+     */
+    public function findAllJoinUser(): array
+    {
+        return $this->createQueryBuilder('t')
+            ->select('t', 'author', 'editor')
+            ->leftJoin('t.author', 'author')
+            ->leftJoin('t.updatedBy', 'editor')
+            ->getQuery()
+            ->getResult();
+    }
+    
     /**
      * @throws ORMException
      * @throws OptimisticLockException
