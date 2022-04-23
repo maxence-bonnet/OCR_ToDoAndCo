@@ -14,13 +14,13 @@
             {% if task.createdAt %}
                 <tr>
                     <th> Créée le : </th>
-                    <td> {{ task.createdAt|date('d/m/Y à H:i') }} par {{ task.author.username }} </td>
+                    <td> {{ task.createdAt|date('d/m/Y à H:i') }} par {{ task.author ? task.author.username : 'Anonyme' }} </td>
                 </tr>            
             {% endif %}
             {% if task.updatedAt %}
                 <tr>
                     <th> Dernière mise à jour le : </th>
-                    <td> {{ task.updatedAt|date('d/m/Y à H:i') }} {{ task.author ? 'par ' ~ task.author.username}} </td>
+                    <td> {{ task.updatedAt|date('d/m/Y à H:i') }} par {{ task.updatedBy ? task.updatedBy.username : 'Anonyme' }} </td>
                 </tr>            
             {% endif %}
             <tr>

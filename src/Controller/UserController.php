@@ -30,10 +30,6 @@ class UserController extends AbstractController
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
-        if (!$form->get('plainPassword') || !$form->get('plainPassword')->getData()) {
-            // TODO add violation
-        }
-
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
@@ -99,6 +95,7 @@ class UserController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
             $userRepository->remove($user);
+            $this->addFlash('warning', "L'utilisateur {$user->getUsername()} a bien été supprimé.");
         }
 
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);

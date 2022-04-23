@@ -15,10 +15,14 @@
                 <nav class="mb-2">
                     <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
                         <li>
-                            <a class="nav-link {{ tab == 'todo' ? 'active' }} text-dark" href="#tasks_to_do" data-bs-toggle="tab">Tâches à faire</a>
+                            <a class="nav-link {{ tab == 'todo' ? 'active' }} text-dark" href="#tasks_to_do" data-bs-toggle="tab">
+                                <i data-feather="x-circle"></i> Tâches à faire
+                            </a>
                         </li>
                         <li>
-                            <a class="nav-link {{ tab == 'done' ? 'active' }} text-dark" href="#tasks_done" data-bs-toggle="tab">Tâches terminées</a>
+                            <a class="nav-link {{ tab == 'done' ? 'active' }} text-dark" href="#tasks_done" data-bs-toggle="tab">
+                                <i data-feather="check-circle"></i> Tâches terminées
+                            </a>
                         </li>
                     </ul>
                 </nav>

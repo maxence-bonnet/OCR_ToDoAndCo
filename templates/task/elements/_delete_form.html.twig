@@ -1,4 +1,4 @@
 <form method="post" action="{{ path('app_task_delete', {id: task.id}) }}" onsubmit="return confirm('Supprimer cette tâche ?');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ task.id) }}">
-    <button class="btn btn-sm btn-danger"> Supprimer <i data-feather="trash-2"></i> </button>
+    <button class="btn btn-sm btn-danger" {{ is_granted('TASK_DELETE', task) ?: 'disabled'}}> Supprimer <i data-feather="trash-2"></i> </button>
 </form>

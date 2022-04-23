@@ -17,6 +17,24 @@ class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $passwordRequired = false;
+        $passwordContraints = [
+            new Length([
+                'min' => 6,
+                'minMessage' => 'Le mot de passe doit contenir au minimum {{ limit }} caractères',
+                'max' => 1000,
+            ]),
+        ];
+
+        /** @var User $user */
+        $user = $builder->getData();
+        if (!$user->getId()) {
+            $passwordRequired = true;
+            $passwordContraints[] = new NotBlank([
+                'message' => 'Un mot de passe doit être saisi à la création d\'un utilisateur',
+            ]);
+        }
+
         $builder
             ->add('username', null , [
                 'constraints' => [
@@ -41,20 +59,14 @@ class UserType extends AbstractType
                 'type' => PasswordType::class,
                 'first_options' => [
                     'attr' => ['autocomplete' => 'new-password'],
-                    'constraints' => [
-                        new Length([
-                            'min' => 6,
-                            'minMessage' => 'Le mot de passe doit contenir au minimum {{ limit }} caractères',
-                            'max' => 1000,
-                        ]),
-                    ],
+                    'constraints' => $passwordContraints
                 ],
                 'second_options' => [
                     'attr' => ['autocomplete' => 'new-password'],
                 ],
                 'invalid_message' => 'Les mots de passe sasis ne correspondent pas',
                 'mapped' => false,
-                'required' => false,
+                'required' => $passwordRequired,
             ])
         ;
         
@@ -73,6 +85,7 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'user' => null,
         ]);
     }
 }

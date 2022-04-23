@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\TaskRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
 class Task
@@ -14,9 +16,11 @@ class Task
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message: 'Vous devez saisir un titre pour la tâche')]
     private $title;
 
     #[ORM\Column(type: 'text')]
+    #[Assert\NotBlank(message: 'Vous devez décrire la tâche')]
     private $content;
 
     #[ORM\Column(type: 'boolean')]
@@ -29,9 +33,11 @@ class Task
     private $updatedAt;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'tasks')]
+    #[JoinColumn(onDelete: 'set null')]
     private $author;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'updatedTasks')]
+    #[JoinColumn(onDelete: 'set null')]
     private $updatedBy;
 
     public function __construct()

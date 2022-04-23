@@ -1,7 +1,7 @@
-<form method="post" action="{{ path('app_task_toggle', {id: task.id}) }}" onsubmit="return confirm('Changer le statut de la tâche ?');">
+<form method="post" id="toggle-form-task-{{ task.id }}" action="{{ path('app_task_toggle', {id: task.id}) }}" onsubmit="return confirm('Changer le statut de la tâche ?');">
     <input type="hidden" name="_token" value="{{ csrf_token('toggle' ~ task.id) }}">
     {% if task.isDone %}
-        <button class="btn btn-sm btn-secondary"> <i data-feather="arrow-left-circle"></i> Marquer non terminé </button>
+        <button class="btn btn-sm btn-secondary"> <i data-feather="arrow-left-circle"></i> Marquer non terminée </button>
     {% else %}
         <button class="btn btn-sm btn-success"> Marquer comme faite <i data-feather="arrow-right-circle"></i> </button>
     {% endif %}

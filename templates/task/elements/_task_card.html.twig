@@ -1,4 +1,4 @@
-<div class="card shadow-sm border-light mb-3 h-100">
+<div id="task-{{ task.id }}" class="card task-card shadow-sm border-light mb-3 h-100">
     <div class="card-header"> 
         <a href="{{ path('app_task_show', {id: task.id}) }}" class="text-decoration-none text-dark">{{ task.title }} </a>
     </div>
@@ -11,7 +11,7 @@
             </div>
             <div class="col-2">
                 <span class="badge {{ 'bg-' ~ (task.isDone ? 'success' :  'danger')  }} rounded float-end">
-                    <i data-feather="{{ task.isDone ? 'check-circle' :  'x-circle' }}" class="fs-5"></i>
+                    <i data-feather="{{ task.isDone ? 'check-circle' :  'x-circle' }}"></i>
                 </span>
             </div>
         </div>
@@ -34,11 +34,23 @@
                 {% if task.updatedAt != task.createdAt %}
                     Dernière mise à jour le : {{ task.updatedAt|date('d/m/y à H:i') }}
                     <br>
-                    Par : {{ task.updatedBy ? task.updatedBy.username : task.author.username}}                
+                    Par : 
+                    {% if task.updatedBy %}
+                        {{ task.updatedBy.username }}
+                    {% elseif task.author %}
+                        {{ task.author.username }}
+                    {% else %}
+                        Anonyme        
+                    {% endif %}
                 {% else %}
                     Créée le : {{ task.createdAt|date('d/m/y à H:i') }}
                     <br>
-                    Par : {{ task.author.username }}                       
+                    Par : 
+                    {% if task.author %}
+                        {{ task.author.username }}
+                    {% else %}
+                        Anonyme        
+                    {% endif %}                      
                 {% endif %}
             </small>
         </p>
