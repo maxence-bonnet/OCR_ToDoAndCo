@@ -51,11 +51,13 @@ class TaskControllerTest extends WebTestCase
 
     public function testAddNewTask()
     {
-        $client = $this->getAuthenticatedClient();
+        $client = $this->getAuthenticatedClient(self::USER_1);
+        $user = $this->findOneUser(['username' => self::USER_1]);
 
         $crawler = $client->request('GET', '/taches/nouvelle');
 
-        $content = 'Pellentesque 123456789 et sapien pulvinar consectetur. Abnobas sunt hilotaes de placidus vita.';
+        $rand = rand(1000, 9999);
+        $content = "Pellentesque {$rand} et sapien pulvinar consectetur. Abnobas sunt hilotaes de placidus vita.";
 
         $client->submitForm('Enregister', [
             'task[title]' => 'Titre test',
@@ -65,12 +67,21 @@ class TaskControllerTest extends WebTestCase
         $crawler = $client->followRedirect();
 
         $this->assertSame($content, $crawler->filter('#tasks_to_do')->filter('.task-card')->last()->filter('.card-text')->text());
+
+        /** @var Task $task */
+        $task = $user->getTasks()->last();
+        $this->assertSame($content, $task->getContent());
     }
 
     public function testEditTask()
     {
-        $client = $this->getAuthenticatedClient();
-        $task = $this->findOneTask([]);
+        $client = static::createClient();
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        $authenticatedUser = $userRepository->findOneBy(['username' => self::USER_1]);
+        $client->loginUser($authenticatedUser);
+
+        $author = $this->findOneUser(['username' => self::USER_2]);
+        $task = $this->findOneTask(['author' => $author]);
 
         $client->request('GET', "/taches/{$task->getId()}/modifier");
         $title = 'Ce titre a été modifié';
@@ -87,6 +98,10 @@ class TaskControllerTest extends WebTestCase
 
         $this->assertSame($title, $newTitle);
         $this->assertSame($content, $newContent);
+
+        $task = $this->findOneTask(['id' => $task->getId()]);
+        $this->assertSame($task->getAuthor()->getId(), $author->getId(), 'Author is not supposed to be updated while editing task');
+        $this->assertSame($task->getUpdatedBy()->getId(), $authenticatedUser->getId(), 'Last modification\'s author is supposed to be updated (authenticated user) while editing task.');
     }
 
     /**
