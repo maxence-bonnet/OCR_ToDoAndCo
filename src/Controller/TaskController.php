@@ -97,7 +97,7 @@ class TaskController extends AbstractController
     #[IsGranted(data: 'TASK_DELETE', subject: 'task', message: 'Vous n\'avez pas l\'autorisation d\'effectuer cette opération', statusCode: 403)]
     public function delete(Request $request, Task $task, TaskRepository $taskRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$task->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete_'.$task->getId(), $request->request->get('_token'))) {
             $taskRepository->remove($task);
             $this->addFlash('warning', 'La tâche a bien été supprimée !');
         }
