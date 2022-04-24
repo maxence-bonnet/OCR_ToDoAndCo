@@ -20,7 +20,6 @@ yarn-error.log
 ###> symfony/phpunit-bridge ###
 .phpunit.result.cache
 /phpunit.xml
-/coverage
 ###< symfony/phpunit-bridge ###
 
 .php-version
