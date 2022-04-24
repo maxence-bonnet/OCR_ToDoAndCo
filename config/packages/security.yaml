@@ -23,7 +23,7 @@ security:
             custom_authenticator: App\Security\AppAuthenticator
             logout:
                 path: app_logout
-                target: app_home
+                target: app_login
             switch_user: { parameter: switch }
 
     role_hierarchy:
