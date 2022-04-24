@@ -1,0 +1,63 @@
+# count : le nombre d'appels de la fonction ;
+# wall_time : le temps complet d'exécution ;
+# cpu_time : le temps processeur de la fonction ;
+# memory : la mémoire consommée par la fonction ;
+# peak_memory : le pic de mémoire utilisée par la fonction ;
+# network_in : la quantité de données entrantes (réseau) ;
+# network_out : la quantité de données sortantes (réseau) ;
+# io : la quantité de données sur le système de fichiers.
+
+# Déclaration d'une nouvelle métrique
+metrics:
+    services:
+        label: "Appels du Container de Services"
+        matching_calls:
+            php:
+                - callee:
+                    selector: "=Symfony\Component\DependencyInjection\Container::get"
+                    argument: { 1: "^"} # capturer l'argument qui match l'expression régulière "^" (c'est à dire tous)
+# =  pour matcher exactement l'expression passée ;
+# ^  pour matcher tout ce qui commence par l'expression ;
+# /  permet de passer une expression régulière ;
+# !  ne doit pas matcher cette expression.
+
+# =Foo::bar  : capture la fonction "bar" appartenant à la classe "Foo" ;
+# =baz  : capture la fonction "baz" ;
+# Foo::  : capture toutes les fonctions de la classe "Foo".
+
+# Here are some selector examples:
+# =Class::method: Matches the method function calls on Class;
+# =func: Matches the func function calls;
+# |Psr\Log\LoggerInterface::log: Matches any calls to log on objects that are an instance of Psr\Log\LoggerInterface;
+# ^ArrayObject::: Matches all function calls from the ArrayObject class;
+# ^exif_: Matches all function calls for which the function starts with exif_;
+# /^Class::(method1|method2)$/: Matches method1 and method2 calls from Class;
+# !^spl_autoload_call$!: Matches any function/method calls but spl_autoload_call ones.
+tests:
+    "Global":
+        path: "/.*"
+        assertions:
+            - metrics.sql.queries.count < 10
+    "Symfony":
+        path: "/.*"
+        assertions:
+            - metrics.symfony.kernel.debug.count == 0 # en mode production
+            - metrics.symfony.yaml.reads.count == 0 # mise en cache du YAML
+            - metrics.symfony.config_check.count == 0
+    "Twig":
+        path: "/.*"
+        assertions:
+            - metrics.twig.compile.count == 0 # Pas de compilation en production
+            - metrics.twig.attributes.get.count < 30 # Pas trop de logique dans les templates
+    "Doctrine":
+        path: "/.*"
+        assertions:
+            - metrics.doctrine.annotations.parsed.count == 0
+            - metrics.doctrine.annotations.read.count == 0
+            - metrics.doctrine.entities.metadata.count == 0
+            - metrics.doctrine.proxies.generated.count == 0
+    "Non-regression":
+        path: "/.*"
+        assertions:
+            - percent(main.memory) < 5% # Contrôle de la consommation de mémoire
+            - diff(main.wall_time) < 0.1s # Contrôle du temps de chargement du script
