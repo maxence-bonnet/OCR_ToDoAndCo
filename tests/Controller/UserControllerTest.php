@@ -109,7 +109,6 @@ class UserControllerTest extends WebTestCase
         ]);
         $this->assertResponseRedirects('/utilisateurs/', Response::HTTP_SEE_OTHER);
         $crawler = $client->followRedirect();
-        $user = $this->findOneUser(['username' => $username]);
         $this->assertSame($crawler->filter('.alert.alert-success.alert-dismissible')->text(), "L'utilisateur {$username} a bien été créé", 'New user creation failed.');
         $usersCount2 = static::getContainer()->get(UserRepository::class)->count([]);
         $this->assertEquals($usersCount1 + 1, $usersCount2, 'User was not persisted after successful creation.');
