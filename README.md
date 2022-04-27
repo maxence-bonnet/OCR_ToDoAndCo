@@ -157,15 +157,28 @@ You can check the online demonstration [here](https://todoandco.maxence-bonnet.f
 Feel free to connect (with fixtures) or register, and try it. Data will be reset 3 times a day.
 
 ## Testing the application
-run 
+
+Create the dedicated test database 
+
+```
+php bin/console doctrine:schema:update -f --env=test
+```
+
+Load fixtures
+```
+php bin/console doctrine:fixtures:load
+```
+
+Run 
 ```
 php bin/phpunit
 ```
 
-add the flag `--coverage-html my_folder` to retrieve a full test coverage report, wich which will be created in the folder `/my_fodler` at project root
+add the flag `--coverage-html coverage` to retrieve a full test coverage report, wich which will be created in the folder `/coverage` at project root
 
 add the flag `--filter testWhatIWant` to run only the test named `testWhatIWant`
 
+Thanks to the DAMADoctrineTestBundle, all changes to the database are rolled back when a test completes. This means that all the application tests begin with the same database contents.
 
 ## Code Analysis
 
