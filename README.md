@@ -191,4 +191,4 @@ the project is monitored by these two analysis tools : Symfony Insight & Codacy
 
 ## Contribute
 
-See [Contribute to the project](https://github.com/maxence-bonnet/OCR_ToDoAndCo/#readme)
+See [Contribute to the project](https://github.com/maxence-bonnet/OCR_ToDoAndCo/blob/master/doc/contribution.md)
