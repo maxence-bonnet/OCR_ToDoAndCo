@@ -161,12 +161,13 @@ Feel free to connect (with fixtures) or register, and try it. Data will be reset
 Create the dedicated test database 
 
 ```
+php bin/console doctrine:database:create --env=test
 php bin/console doctrine:schema:update -f --env=test
 ```
 
 Load fixtures
 ```
-php bin/console doctrine:fixtures:load
+php bin/console doctrine:fixtures:load --env=test
 ```
 
 Run 
