@@ -1,5 +1,5 @@
 # <p align="center">ToDo&Co</p>
-## <p align="center">Contributings to the project</p>
+## <p align="center">Contributing to the project</p>
 
 Thank you for offering your contribution to this project, there is still much to do. Before you begin, please make sure you have read the following guidelines.
 
