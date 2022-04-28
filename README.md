@@ -9,8 +9,6 @@
 
 - [Composer 2.1+](https://getcomposer.org/) 
 
-- [Symfony 6.0+](https://symfony.com/)
-
 - [Yarn 1.20+](https://yarnpkg.com/) or [npm](https://www.npmjs.com/package/npm)
 
 ---
@@ -20,6 +18,8 @@
 - [XAMPP 8.0.3](https://www.apachefriends.org/fr/index.html) -> manage the database more easily (on/off + phpMyAdmin)
 
 - [Symfony cli 4.28.1](https://symfony.com/download) -> more command lines + improved local web server
+
+- [Symfony 5.4](https://symfony.com/)
 
 ---
 
