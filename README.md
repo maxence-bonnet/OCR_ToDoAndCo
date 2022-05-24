@@ -152,7 +152,7 @@ Admin :
 
 ## Website preview 
 
-You can check the online demonstration [here](https://todoandco.maxence-bonnet.fr/)
+You can check the online demonstration [here](https://todo-and-co.maxence-bonnet.fr/)
 
 Feel free to connect (with fixtures) or register, and try it. Data will be reset 3 times a day.
 
